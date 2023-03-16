@@ -1,6 +1,7 @@
 package com.kyobo.koreait.controller;
 
 import com.kyobo.koreait.domain.dtos.CartDTO;
+import com.kyobo.koreait.domain.dtos.HeartDTO;
 import com.kyobo.koreait.domain.dtos.UserDTO;
 import com.kyobo.koreait.domain.vos.BookVO;
 import com.kyobo.koreait.service.mainService;
@@ -40,11 +41,20 @@ public class MainController {
             @RequestBody List<CartDTO> cartDTOS
     ){
         log.info("==== insert_cart =====");
-        mainService.insert_cart(userDetails, cartDTOS);
-
-        return false;
+        return mainService.insert_books_in_cart(userDetails, cartDTOS);
 
     }
+
+    @ResponseBody
+    @PostMapping("main/heart")
+    public boolean insert_heart(
+            @AuthenticationPrincipal UserDetails userDetails,
+            @RequestBody List<HeartDTO> heartDTOS
+    ){
+        log.info("===== insert_heart ======");
+        return mainService.insert_books_in_heart(userDetails, heartDTOS);
+    }
+
 }
 
 
