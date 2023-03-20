@@ -35,7 +35,7 @@ public class CustomSecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
         log.info(" ============== filterChain 실행 =============== ");
 //        http.authorizeRequests().antMatchers("/user/main").authenticated();
-        http.formLogin().loginPage("/user/login").successForwardUrl("/");
+        http.formLogin().loginPage("/user/login");
         // 로그아웃 => 내가 만든 /user/logout 으로 이동 => 세션 삭제 => 성공 시 '/'로 이동
         http.logout().logoutUrl("/user/logout").invalidateHttpSession(true).logoutSuccessUrl("/");
         http.exceptionHandling().accessDeniedPage("/error/accessDenied"); //403처리

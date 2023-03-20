@@ -2,6 +2,7 @@
 <html lang="ko"
       xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
 >
 <head>
     <meta charset="UTF-8">
@@ -9,13 +10,13 @@
     <link rel="stylesheet" th:href="@{/css/user/login.css}" href="../../static/css/user/login.css">
 </head>
 <body>
-<form action="">
+<form th:method="post">
     <h1>KOREAIT KYOBO 교보문고</h1>
     <div id="user-input" class="input-box">
         <input type="text" name="username" placeholder="아이디를 입력해 주세요">
         <input type="text" name="password" placeholder="비밀번호를 입력해 주세요">
     </div>
-    <input id="login-btn" type="button" value="로그인">
+    <input id="login-btn" type="submit" value="로그인">
 
     <div  id="remember-button" class="input-box">
         <div>

@@ -5,8 +5,6 @@ import lombok.Setter;
 import lombok.ToString;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.User;
-
-import javax.validation.constraints.NotBlank;
 import java.util.Collection;
 
 @Getter

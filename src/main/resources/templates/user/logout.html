@@ -1,17 +1,19 @@
 <!DOCTYPE html>
 <html lang="ko"
       xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.uitraq.net.nz/thymeleaf/layout"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
 >
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
 <body>
- <h1> 로그아웃 페이지 </h1>
- <form method="post">
-   <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
-   <input type="submit" value="로그아웃">
- </form>
+<h1>로그아웃 페이지</h1>
+<form method="post">
+    <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}">
+    <input type="submit" value="로그아웃하기!">
+</form>
+
+
 </body>
 </html>

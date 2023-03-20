@@ -61,6 +61,7 @@ public class RestAPIController {
         try {
             String authenticateNumber = restAPIService.send_authenticate_message(phone_number);
             session.setAttribute("authenticateNumber", authenticateNumber);
+            session.setAttribute("phoneAuthenticated", false);
             session.setAttribute("phoneAuthenticatedNumber", phone_number);
             return "succeed";
         } catch (Exception e){

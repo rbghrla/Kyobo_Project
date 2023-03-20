@@ -12,7 +12,7 @@ function create_book_list_in_cart(cartList){
     bookCartContainer.innerHTML = '';
     for(cart of cartList){
         bookCartContainer.insertAdjacentHTML('beforeend',
-            `<section class="book-info-container">
+        `<section class="book-info-container">
                 <i class="fa-regular fa-circle-check"></i>
                 <img src="" alt="이미지">
                 <div class="book-info">
