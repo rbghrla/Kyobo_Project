@@ -43,8 +43,8 @@ public class UserService {
         return userMapper.modify_book_count_in_cart(cartVO);
     }
 
-    public boolean delete_book_in_cart(List<CartVO> cartVOS){
-        cartVOS.parallelStream().forEach(vo -> vo.setUserEmail(us))
+    public boolean delete_book_in_cart(UserDetails userDetails,List<CartVO> cartVOS){
+        cartVOS.parallelStream().forEach(vo -> vo.setUserEmail(userDetails.getUsername()));
         return  userMapper.delete_book_in_cart(cartVOS);
     }
 

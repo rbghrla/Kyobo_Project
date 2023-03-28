@@ -28,9 +28,8 @@
 
 
     <delete id="delete_book_in_cart" parameterType="java.util.List">
-        DELETE FROM `cart_tbl` WHERE `userEmail` =
-        <foreach collection="List" item="cartVO" separator=",">
-
+        <foreach collection="List" item="cartVO" >
+        DELETE FROM `cart_tbl` WHERE `userEmail` = #{cartVO.userEmail} AND `bookISBN` = #{cartVO.bookISBN}
         </foreach>
     </delete>
 
