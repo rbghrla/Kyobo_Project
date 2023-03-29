@@ -34,7 +34,7 @@ function modify_cart(btn, operator){
         .then(value => {
             if(value == 'true') get_cart();
         });
-    // .catch(reason => {log.info(reason)});
+        // .catch(reason => {log.info(reason)});
 }
 
 function delete_cart(){
@@ -83,7 +83,7 @@ function create_book_list_in_cart(cartList){
     bookCartContainer.innerHTML = '';
     for(cart of cartList){
         bookCartContainer.insertAdjacentHTML('beforeend',
-            `<section class="book-info-container">
+        `<section class="book-info-container">
                 <span><i class="fa-regular fa-circle-check" onclick="checkBox_click(this)"></i></span>
                 <input type="hidden" value=${cart.bookISBN} class="book-info-isbn" />
                 <img src="" alt="이미지">
@@ -156,7 +156,8 @@ orderProceedBtn.onclick = () => {
     const containers = get_clicked_boxes();
     containers.forEach(container => {
         const isbnValue = container.querySelector('.book-info-isbn').value;
-        body.cartVOS.push({bookISBN: isbnValue});
+        const bookInfoCountValue = container.querySelector('.book-info-count-container').querySelector('input').value;
+        body.cartVOS.push({bookISBN: isbnValue, bookCount: bookInfoCountValue});
     });
 
     if(body.cartVOS.length === 0) {

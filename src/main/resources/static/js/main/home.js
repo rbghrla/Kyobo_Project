@@ -42,13 +42,13 @@ function insert_heart_cart_checked(userEmail, clickedBtn){
 function insert(clickedBtn, bookISBNArray){
     const requestURL = clickedBtn === heartAllBtn ? '/user/heart' : '/user/cart';
     fetch(requestURL, {
-        method: 'POST',
-        headers: {
-            "content-Type": 'application/json',
-            "X-CSRF-TOKEN": csrfToken
-        },
-        body: JSON.stringify(bookISBNArray)
-    })
+            method: 'POST',
+            headers: {
+                "content-Type": 'application/json',
+                "X-CSRF-TOKEN": csrfToken
+            },
+            body: JSON.stringify(bookISBNArray)
+        })
         .then(value => value.text())
         .then(value => { console.log(value); })
         .catch(reason => { console.log(reason); });

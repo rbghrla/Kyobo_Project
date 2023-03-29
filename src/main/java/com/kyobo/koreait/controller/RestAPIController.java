@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
-import java.util.Map;
 
 @Log4j2
 @RestController
@@ -47,7 +46,7 @@ public class RestAPIController {
             session.setAttribute("phoneAuthenticated", true);
             return true;
         }
-
+        
         //서버가 가지고 있는 인증번호와 사용자가 입력한 인증번호를 비교한 결과를 반환함
         return false;
     }
@@ -70,7 +69,7 @@ public class RestAPIController {
         return "failed";
     }
 
-
+    
 
 
 

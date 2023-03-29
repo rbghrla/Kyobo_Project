@@ -1,13 +1,15 @@
 package com.kyobo.koreait.domain.vos;
 
 import com.kyobo.koreait.domain.enums.UserRole;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.RequiredArgsConstructor;
 
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 
 
 @Data
+@AllArgsConstructor
 @RequiredArgsConstructor
 public class UserVO {
     @NotBlank
@@ -20,7 +22,7 @@ public class UserVO {
     private String birth;
     @NotBlank
     private String phone;
-
+    
     private UserRole role;
 }
 

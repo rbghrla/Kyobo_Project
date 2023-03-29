@@ -85,19 +85,19 @@ function email_authenticate(){
 
 // 휴대폰 인증번호 발송하기 버튼
 function phoneNumber_authenticate(){
-    fetch('/api/sms/' + userPhoneInput.value)
-        .then(value => {
-            console.log()
-            if(value.ok) {
-                return value.text();
-            }
-        })
-        .then(value => {
-            console.log(value)
-        })
-        .catch(reason => {
-            console.log(reason);
-        });
+   fetch('/api/sms/' + userPhoneInput.value)
+       .then(value => {
+           console.log()
+           if(value.ok) {
+               return value.text();
+           }
+       })
+       .then(value => {
+           console.log(value)
+       })
+       .catch(reason => {
+           console.log(reason);
+       });
 }
 
 // 휴대폰으로 전송된 인증번호로 인증하기 버튼

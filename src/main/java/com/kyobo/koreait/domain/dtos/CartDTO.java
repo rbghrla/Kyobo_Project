@@ -11,7 +11,8 @@ import lombok.ToString;
 @AllArgsConstructor
 public class CartDTO {
     private int no;
-    private String userEmail;
     private String bookISBN;
     private int bookCount;
+    private String title;
+    private int price;
 }

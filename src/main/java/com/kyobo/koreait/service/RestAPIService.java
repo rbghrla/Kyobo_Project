@@ -1,36 +1,24 @@
 package com.kyobo.koreait.service;
 
-import com.kyobo.koreait.mapper.UserMapper;
 import lombok.extern.log4j.Log4j2;
-import org.apache.http.client.HttpClient;
-import org.apache.http.impl.client.HttpClientBuilder;
 import org.apache.tomcat.util.codec.binary.Base64;
-import org.json.JSONArray;
-import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
-import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
 
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
-import java.util.Random;
 
 @Log4j2
 @Service
 public class RestAPIService {
     @Autowired
     private UserMapper userMapper;
-
-
+    
+    
     public boolean get_user(String userEmail){// 유저가 존재하면 true, 존재하지 않으면 false 반환
         return userMapper.get_user(userEmail) != null;
     }
-
+    
     public String send_authenticate_message(String phone_number) throws Exception {
         StringBuilder smsAuthenticateNumber = new StringBuilder();
         // 0. 필요한 데이터 정의
@@ -44,9 +32,9 @@ public class RestAPIService {
         for(int i = 0; i < 4; i++){
             smsAuthenticateNumber.append((int) (Math.random() * 10));
         }
-
+        
         log.info("생성된 랜덤 인증번호 4자리 => " + smsAuthenticateNumber);
-
+        
 //        // 1. Http요청을 위해 RestTemplate 객체 선언
 //        RestTemplate restTemplate = new RestTemplate();
 //

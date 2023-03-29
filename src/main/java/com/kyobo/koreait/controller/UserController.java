@@ -2,16 +2,18 @@ package com.kyobo.koreait.controller;
 
 import com.kyobo.koreait.domain.dtos.CartDTO;
 import com.kyobo.koreait.domain.dtos.HeartDTO;
+import com.kyobo.koreait.domain.dtos.OrderDTO;
 import com.kyobo.koreait.domain.vos.CartVO;
+import com.kyobo.koreait.domain.vos.PaymentVO;
 import com.kyobo.koreait.domain.vos.UserVO;
 import com.kyobo.koreait.service.UserService;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -26,21 +28,28 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    /******************** 로그인 관련 **********************/
+    
     @GetMapping("/login")
     public void login_user_get(){
-
+        
     }
-
+    
     @PostMapping("/login")
     public String login_user_post(){
         return "redirect:/";
     }
+    
+    
+    /******************** 로그아웃 관련 **********************/
 
     @GetMapping("/logout")
     public void logout(){
         log.info(" ====== 유저 로그아웃(logout) ====== ");
     }
 
+
+    /******************** 회원가입 관련 **********************/
     @GetMapping("/register")
     public void register_user(){
     }
@@ -77,12 +86,54 @@ public class UserController {
         return "redirect:/";
     }
 
-    @PreAuthorize("isAuthenticated()")
-    @GetMapping("/mypage")
-    public void mypage_user(){
-        log.info(" ====== mypage_user ======= ");
 
+    /******************** 마이페이지 관련 **********************/
+    @PreAuthorize("isAuthenticated()")
+    @GetMapping("/mypage/main")
+    public void mypage_main(){
+        log.info(" ====== mypage_main - 유저의 마이페이지 메인화면 ======= ");
+        
     }
+    
+    @PreAuthorize("isAuthenticated()")
+    @GetMapping("/mypage/heart")
+    public void mypage_heart(
+            @AuthenticationPrincipal UserDetails userDetails,
+            Model model
+    ){
+        log.info(" ====== mypage_heart - 유저의 마이페이지 - 찜 목록 화면 ======= ");
+        model.addAttribute("bookVOS", userService.get_books_in_heart(userDetails.getUsername()));
+    }
+    
+    @PreAuthorize("isAuthenticated()")
+    @GetMapping("/mypage/order/main")
+    public void mypage_order_main(
+            @AuthenticationPrincipal UserDetails userDetails,
+            Model model
+    ){
+        log.info(" ====== mypage_order - 유저의 마이페이지 - 주문/배송 메인화면 ======= ");
+        //해당 유저가 결제한 결제 내역들을 가져온다 (결제 내역만 가져오고 상세 부분은 없음)
+        List<PaymentVO> paymentVOS = userService.get_payment(userDetails.getUsername());
+        model.addAttribute("paymentVOS", paymentVOS);
+    }
+
+    @PreAuthorize("isAuthenticated()")
+    @GetMapping("/mypage/order/detail/{orderNo}")
+    public String mypage_order_detail(
+            @AuthenticationPrincipal UserDetails userDetails,
+            @PathVariable String orderNo,
+            Model model
+    ){
+        log.info(" ====== mypage_order - 유저의 마이페이지 - 주문/배송 메인화면 ======= ");
+        //해당 유저가 주문한 주문 내역들을 가져온다 (상세 주문 내역 - 책 정보도 들어있음)
+        List<CartDTO> cartDTOS = userService.get_order(orderNo);
+        model.addAttribute("cartDTOS", cartDTOS);
+        return "/user/mypage/order/detail";
+    }
+    
+    
+    /******************** 장바구니 관련 **********************/
+    
 
     @ResponseBody
     @GetMapping("/cart")
@@ -91,7 +142,7 @@ public class UserController {
     ){
         return userService.get_cart(userDetails.getUsername());
     }
-
+    
     @ResponseBody
     @PostMapping("/cart")
     public boolean insert_cart(
@@ -109,6 +160,7 @@ public class UserController {
             @RequestBody CartVO cartVO
     ){
         log.info(" ==== modify_cart ==== ");
+        log.info(cartVO);
         return userService.modify_book_count_in_cart(userDetails.getUsername(), cartVO);
     }
 
@@ -118,12 +170,11 @@ public class UserController {
             @AuthenticationPrincipal UserDetails userDetails,
             @RequestBody List<CartVO> cartVOS
     ){
-        log.info(" delete_cart- 장바구니 삭제");
-        return userService.delete_book_in_cart(userDetails, cartVOS);
-
+        log.info(" delete_cart - 장바구니 삭제 ");
+        return userService.delete_book_in_cart(userDetails.getUsername(), cartVOS);
     }
 
-
+    /******************** 찜 관련 **********************/    
     @ResponseBody
     @PostMapping("/heart")
     public boolean insert_heart(
@@ -134,8 +185,33 @@ public class UserController {
         return userService.insert_books_in_heart(userDetails, heartDTOS);
     }
 
+    /******************** 주문 관련 **********************/
+    @ResponseBody
+    @PreAuthorize("isAuthenticated()")
+    @PostMapping("/order")
+    public String insert_order(
+            @AuthenticationPrincipal UserDetails userDetails,
+            @RequestBody OrderDTO orderDTO){
+        log.info(" ======== insert_order - 상품 주문하기 ======== ");
+        //현재 로그인된 유저 정보와 javascript에서 받아온 DTO객체 정보를 넘겨줌
+        boolean orderResult = userService.insert_payment_order(userDetails.getUsername(), orderDTO);
+        if(!orderResult){
+            return "/error/main";
+        }
+        return "/main/order";
+    }
 
 
 
 
 }
+
+
+
+
+
+
+
+
+
+
