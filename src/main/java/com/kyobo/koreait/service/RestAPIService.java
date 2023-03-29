@@ -1,5 +1,6 @@
 package com.kyobo.koreait.service;
 
+import com.kyobo.koreait.mapper.UserMapper;
 import lombok.extern.log4j.Log4j2;
 import org.apache.tomcat.util.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;

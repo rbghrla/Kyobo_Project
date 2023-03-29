@@ -2,6 +2,7 @@ package com.kyobo.koreait.service;
 
 import com.kyobo.koreait.domain.dtos.UserDTO;
 import com.kyobo.koreait.domain.vos.UserVO;
+import com.kyobo.koreait.mapper.UserMapper;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -16,6 +17,7 @@ import java.util.Collections;
 @Log4j2
 @Service
 public class CustomUserDetailsService implements UserDetailsService {
+
     @Autowired
     private UserMapper userMapper;
 
