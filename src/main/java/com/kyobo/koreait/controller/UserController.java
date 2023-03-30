@@ -128,7 +128,7 @@ public class UserController {
         //해당 유저가 주문한 주문 내역들을 가져온다 (상세 주문 내역 - 책 정보도 들어있음)
         List<CartDTO> cartDTOS = userService.get_order(orderNo);
         model.addAttribute("cartDTOS", cartDTOS);
-        return "/user/mypage/order/detail";
+        return "user/mypage/order/detail";
     }
     
     
@@ -196,9 +196,9 @@ public class UserController {
         //현재 로그인된 유저 정보와 javascript에서 받아온 DTO객체 정보를 넘겨줌
         boolean orderResult = userService.insert_payment_order(userDetails.getUsername(), orderDTO);
         if(!orderResult){
-            return "/error/main";
+            return "error/main";
         }
-        return "/main/order";
+        return "main/order";
     }
 
 

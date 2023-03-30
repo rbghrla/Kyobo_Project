@@ -47,7 +47,7 @@ public class MainController {
     @GetMapping("/")
     public String main(){
         log.info(" ====== main페이지 ========");
-        return "/main/home";
+        return "main/home";
     }
 
     @PreAuthorize("isAuthenticated()")
@@ -80,11 +80,11 @@ public class MainController {
         log.info(" 가져온 책 정보 => " + bookVO);
         if(bookVO == null){
             log.info(" 해당 책 페이지가 존재하지 않음.. ");
-            return "/error/main"; //에러 페이지로 이동하도록 함
+            return "error/main"; //에러 페이지로 이동하도록 함
         }
 
         model.addAttribute("bookVO", bookVO);
-        return "/main/details";
+        return "main/details";
     }
     
     //방금 주문 내역 확인 페이지
